@@ -90,7 +90,6 @@ def get_spot_values():
         spot += 1
     #values_spots.sort()
 
-"""
 def ingnore():
     i = 0
     while(True):
@@ -102,10 +101,8 @@ def ingnore():
    
         print_staks(max(len(stack_a), len(stack_b)))
         i += 1
-ingnore()
 functions = {'ss':ss, 'sa':sa, 'sb':sb, 'pa':pa, 'pb':pb, 'rr':rr,
         'rra':rra, 'rrb':rrb, 'rra':rra, 'rrb':rrb, 'rrr': rrr, 'ra':ra, 'rb':rb}
-"""
 
 stack_a = list(map(int , input("Enter stack : ").split()))
 len_stack = len(stack_a)
@@ -114,6 +111,8 @@ values_spots = []
 print_staks(len_stack)
 get_spot_values()
 
+ingnore();
+"""
 for k in range(len_stack):
     print(values_spots)
     mid = len(values_spots) // 2
@@ -130,4 +129,4 @@ for k in range(len_stack):
     print_staks(max(len(stack_a), len(stack_b)))
     values_spots.clear()
     get_spot_values()
-
+"""
