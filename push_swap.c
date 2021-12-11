@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 02:39:04 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/10 11:10:06 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/11 09:26:00 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,26 @@ int	max_instack(t_list *stack)
 	return (max);
 }
 
+int	is_sorted(t_list *lst)
+{
+	if (!lst || lst->next == NULL)
+		return (1);
+	return (*(int *)(lst->content) < *(int *)(lst->next->content)  && is_sorted(lst->next));
+}
 
-void	generate_output(t_list **stack_a, t_list **stack_b, int max_l)
+int	generate_output(t_list **stack_a, t_list **stack_b, int max_l)
 {
 	int 	i;
 	int		flag1;
 	int		flag2;
 	int		flag3;
 	int		count;
+	int		nb;
 	t_list *curr;
 	
-
-	
 	i = 0;
-	while (i < max_l)
+	nb = 0;
+	while (i < max_l && !(is_sorted(*stack_a)))
 	{
 		flag1 = 1;
 		flag2 = -1;
@@ -90,26 +96,33 @@ void	generate_output(t_list **stack_a, t_list **stack_b, int max_l)
 			if ((*(int *) (curr->content) >> i)&1)
 			{
 				if (flag3){flag3= 0; flag1 = *(int *) (curr->content);}else {flag2 = *(int *) (curr->content);}
-				if (flag1 != flag2){rx(stack_a); printf("ra ");}
+				if (flag1 != flag2){rx(stack_a);nb++;}// printf("ra\n");
 			}
 			else
 			{
 				count++;
-				printf("pb ");
+				//printf("pb\n");
+				nb++;
 				px(stack_a, stack_b);
 			}	
 			//print_stack_l(*stack_a);
 			curr = *stack_a;
-		}	
-		i++;
-		while (count--)
-		{
-			printf("pa ");
-			px(stack_b, stack_a);
 		}
+		i++;
+		while (count-- && (i+1) < max_l)
+		{
+			curr = *stack_b;
+			if (!((*(int *) (curr->content) >> (i + 1))&1))
+			{
+				nb++;
+				//printf("pa\n");
+				px(stack_b, stack_a);
+			}
+		}
+		curr = *stack_a;
 	}
+	return(nb);
 }
-
 
 t_list *form_stack(char **args)
 {
@@ -138,14 +151,20 @@ int	main(int ac, char **args)
 	int		max_l;
 	int		max_bits = 0;
 
-	stack_b = NULL;
-	ac--;
-	stack_a = form_stack(++args);
-	max_l = max_instack(stack_a);
-	while ((max_l >> max_bits) != 0) ++max_bits;
-	flow = min_instack(stack_a);
-	add_flow(stack_a, flow);
-	generate_output(&stack_a, &stack_b, max_bits);
-	print_stack_l(stack_a);
+	if (ac > 2)
+	{
+		stack_b = NULL;
+		ac--;
+		stack_a = form_stack(++args);
+		flow = min_instack(stack_a);
+		add_flow(stack_a, flow);
+		max_l = max_instack(stack_a);
+		while ((max_l >> max_bits) != 0) ++max_bits;
+		int	o = generate_output(&stack_a, &stack_b, max_bits);
+		//printf("(%d)\n", is_sorted(stack_a));
+		add_flow(stack_a, -flow);
+		print_stack_l(stack_a);
+		printf("NB_actions = %d\n", o);
+	}
 	return (0);
 }
