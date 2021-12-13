@@ -6,12 +6,12 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 11:23:20 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/11 11:46:36 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/13 11:40:52 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
-
+#include <stdio.h>
 int	min_instack(t_list *stack)
 {
 	t_list	*curr;
@@ -66,10 +66,10 @@ int	is_sorted(t_list *lst)
 	if (!lst || lst->next == NULL)
 		return (1);
 	c = *(int *)(lst->content);
-   	n = *(int *)(lst->next->content); 	
+	n = *(int *)(lst->next->content); 	
 	return ( c < n  && is_sorted(lst->next));
 }
-
+/*
 t_list *form_stack(char **args)
 {
 	int		i;
@@ -87,4 +87,82 @@ t_list *form_stack(char **args)
 		i++;
 	}
 	return (*root);
+}
+*/
+int	get_indexof(int *array, int num)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != num)
+		i++;
+	return (i);
+}
+
+t_list *form_stack(int *array, int *sorted, int ac)
+{
+	int		i;
+	int		*t;
+	t_list	**root;
+
+	root = (t_list **)(malloc(sizeof(t_list *)));
+	*root = NULL;
+	i = 0;
+	while (i < ac)
+	{
+		t = (int *) malloc(sizeof(int));
+		*t = get_indexof(sorted, array[i]);
+		ft_lstadd_back(root, ft_lstnew((void *)t));
+		i++;
+	}
+	return (*root);
+}
+
+void swap(int *i, int *j)
+{
+	int	tmp;
+
+	tmp = *i;
+	*i = *j;
+	*j = tmp;
+}
+
+int	*max_(int 	*array, int	size)
+{
+	int *max;
+	int	i;
+
+	max = array;
+	i = 0;
+	while (++i < size)
+	{
+		if (array[i] > *max)
+			max = &array[i];
+	}
+	return (max);
+}
+
+int	*sort_(char **args, int	ac, int **res)
+{
+	int	i;
+	int	*array;
+	int	*sorted;
+
+	i = 0;
+	array = (int *)(malloc(sizeof(int) * ac));
+	sorted  = (int *)(malloc(sizeof(int) * ac));
+	while (args[i])
+	{
+		array[i] = ft_atoi(args[i]);
+		sorted[i] = array[i];
+		i++;
+	}
+	i = 0;
+	*res = array;
+	while (i < ac)
+	{
+		swap(&sorted[i], max_(&sorted[i], ac -i));	
+		i++;
+	}
+	return (sorted);
 }
