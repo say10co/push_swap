@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-gcc -Wall -Werror -Wextra -c push_swap.c ./utils/*.c 
+gcc -Wall -Werror -Wextra -c push_swap.c basic_.c ./utils/*.c 
 #actions.c push_swap_utils.c
 #gcc  push_swap.o actions.o push_swap_utils.o -L. -lft -o push_swap
 gcc  *.o -L. -lft -o push_swap

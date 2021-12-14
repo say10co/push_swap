@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 11:23:20 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/13 11:40:52 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/14 06:04:43 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,19 +127,19 @@ void swap(int *i, int *j)
 	*j = tmp;
 }
 
-int	*max_(int 	*array, int	size)
+int	*min_(int 	*array, int	size)
 {
-	int *max;
+	int *min;
 	int	i;
 
-	max = array;
+	min = array;
 	i = 0;
 	while (++i < size)
 	{
-		if (array[i] > *max)
-			max = &array[i];
+		if (array[i] < *min)
+			min = &array[i];
 	}
-	return (max);
+	return (min);
 }
 
 int	*sort_(char **args, int	ac, int **res)
@@ -161,7 +161,7 @@ int	*sort_(char **args, int	ac, int **res)
 	*res = array;
 	while (i < ac)
 	{
-		swap(&sorted[i], max_(&sorted[i], ac -i));	
+		swap(&sorted[i], min_(&sorted[i], ac -i));	
 		i++;
 	}
 	return (sorted);

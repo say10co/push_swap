@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 05:28:49 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/11 11:45:14 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/14 07:06:14 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,18 @@ void rx(t_list **stack_x)
 	*stack_x = x_next;
 }
 
+void rr(t_list **stack_a, t_list **stack_b)
+{
+	rx(stack_a);
+	rx(stack_b);
+}
+
+void rrx(t_list **stack_x)
+{
+	t_list *last;
+
+	last = ft_lstlast(*stack_x);
+	set_last_null(stack_x);
+	last->next = *stack_x;
+	*stack_x = last;
+}
