@@ -62,3 +62,13 @@ void rrx(t_list **stack_x)
 	last->next = *stack_x;
 	*stack_x = last;
 }
+
+void	sx(t_list **stack)
+{
+	t_list *tmp;
+
+	tmp = (*stack_a)->next;
+	(*stack_a)->next = tmp->next;
+	tmp->next =  *stack_a;
+	*stack_a = tmp;
+}

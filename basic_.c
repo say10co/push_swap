@@ -11,6 +11,43 @@
 /* ************************************************************************** */
 #include "./includes/includes.h"
 #include <stdio.h>
+
+
+void	three_(t_list **stack_a)
+{
+	int one;
+	int two;
+	int three;
+
+
+	one = *(int *)stack_a->content;
+	tow = *(int *)stack_a->next->content;
+	three = *(int *)stack_a->next->next->content;
+
+	if (one < two && two < three)
+		return ;
+	else if (three < one && one < two)
+		{rra(stack_a);printf("rra\n");}
+	else if (two < three && three < one)
+		{ra(stack_a);printf("ra\n");}
+	else if (one < three && three < two)
+	{
+		rra(stack_a);
+		sx(stack_a);
+		printf("rra\nsa\n");
+	}
+	else if (three < two && two < one)
+	{
+		sx(stack_a);
+		rra(stack_a);
+		printf("sa\nrra\n");
+	}
+	else{
+		sx(stack_a);
+		printf("sa\n");}
+}
+
+
 int	find_indexof_min(t_list *stack)
 {
 	int		index_min;
