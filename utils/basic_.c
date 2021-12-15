@@ -6,58 +6,44 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 09:53:42 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/14 11:44:11 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:33:26 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "./includes/includes.h"
-#include <stdio.h>
+#include "../includes/includes.h"
 
-
-void	three_(t_list **stack_a)
+int	three_(t_list **stack_a)
 {
-	int one;
-	int two;
-	int three;
+	int	one;
+	int	two;
+	int	three;
 
-
-	one = *(int *)stack_a->content;
-	tow = *(int *)stack_a->next->content;
-	three = *(int *)stack_a->next->next->content;
-
+	one = *(int *)(*stack_a)->content;
+	two = *(int *)(*stack_a)->next->content;
+	three = *(int *)(*stack_a)->next->next->content;
 	if (one < two && two < three)
-		return ;
+		return (0);
 	else if (three < one && one < two)
-		{rra(stack_a);printf("rra\n");}
+		return (rrx(stack_a, "rra "));
 	else if (two < three && three < one)
-		{ra(stack_a);printf("ra\n");}
+		return (rx(stack_a, "ra "));
 	else if (one < three && three < two)
-	{
-		rra(stack_a);
-		sx(stack_a);
-		printf("rra\nsa\n");
-	}
+		return (rrx(stack_a, "rra ") + sx(stack_a, "sa "));
 	else if (three < two && two < one)
-	{
-		sx(stack_a);
-		rra(stack_a);
-		printf("sa\nrra\n");
-	}
-	else{
-		sx(stack_a);
-		printf("sa\n");}
+		return (sx(stack_a, "sa ") + rrx(stack_a, "rra "));
+	else
+		return (sx(stack_a, "sa "));
 }
-
 
 int	find_indexof_min(t_list *stack)
 {
 	int		index_min;
 	int		min;
 	int		i;
-	t_list *curr;
+	t_list	*curr;
 
 	index_min = 0;
 	i = 0;
-	min =  *(int *)(stack->content);
+	min = *(int *)(stack->content);
 	curr = stack;
 	while (curr)
 	{
@@ -72,7 +58,7 @@ int	find_indexof_min(t_list *stack)
 	return (index_min);
 }
 
-int	get_minto_top(t_list **stack_a, t_list **stack_b,int size_a)
+int	get_minto_top(t_list **stack_a, t_list **stack_b, int size_a)
 {
 	int	index_min;
 	int	tmp;
@@ -81,59 +67,55 @@ int	get_minto_top(t_list **stack_a, t_list **stack_b,int size_a)
 	i = 0;
 	index_min = find_indexof_min(*stack_a);
 	tmp = index_min;
-	printf("(%d)\n", tmp);
 	if (tmp < size_a / 2)
 	{
 		while (tmp > 0)
-		{ 
-			i++;
-			printf("ra\n");
-			rx(stack_a);
+		{
+			i += rx(stack_a, "ra ");
 			tmp--;
 		}
-		px(stack_a, stack_b);
-		i++;
-		printf("pb\n");
-		return (i);
+		return (i + px(stack_a, stack_b, "pb "));
 	}
 	while (tmp < size_a)
 	{
-		i++;
-		rrx(stack_a);
-		printf("rra\n");
+		i += rrx(stack_a, "rra ");
 		tmp++;
 	}	
-	px(stack_a, stack_b);
-	i++;
-	printf("pb\n");
-	return (i);
+	return (i + px(stack_a, stack_b, "pb "));
 }
 
-int get_allto_stacka(t_list **stack_a, t_list **stack_b)
+int	get_allto_stacka(t_list **stack_a, t_list **stack_b)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*stack_b)
-	{
-		i++;
-		px(stack_b, stack_a);
-		printf("pa\n");
-	}
+		i += px(stack_b, stack_a, "pa ");
 	return (i);
 }
 
-int sort_basic(t_list **stack_a, t_list **stack_b, int size_a)
+int	five(t_list **stack_a, t_list **stack_b)
 {
-	int nb;
+	int	nb;
+
+	nb = 0;
+	nb += get_minto_top(stack_a, stack_b, ft_lstsize(*stack_a));
+	nb += get_minto_top(stack_a, stack_b, ft_lstsize(*stack_a));
+	nb += three_(stack_a);
+	nb += get_allto_stacka(stack_a, stack_b);
+	return (nb);
+}	
+
+int	sort_basic(t_list **stack_a, t_list **stack_b, int size_a)
+{
+	int	nb;
 	int	i;
 
 	nb = 0;
 	i = 0;
-	while (i < size_a)
+	while (i++ < size_a)
 	{
 		nb += get_minto_top(stack_a, stack_b, ft_lstsize(*stack_a));
-		i++;
 	}
 	nb += get_allto_stacka(stack_a, stack_b);
 	return (nb);

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 05:28:49 by adriouic          #+#    #+#             */
-/*   Updated: 2021/12/14 07:06:14 by adriouic         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:15:25 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,57 @@ void	set_last_null(t_list **root)
 		
 }
 
-void	px(t_list **from, t_list **to)
+int	px(t_list **from, t_list **to, char *s)
 {
 	t_list *f_r;
 	
+	write(1, s, 3);
 	f_r = (*from);
 	*from = (*from)->next;
 	ft_lstadd_front(to, f_r);
+	return (1);
 }
 
-void rx(t_list **stack_x)
+int rx(t_list **stack_x, char *s)
 {
 	t_list *x_next;
 
+	write(1, s, 3);
 	x_next = (*stack_x)->next;
 	(*stack_x)->next = NULL;
 	ft_lstadd_back(&x_next, *stack_x);
 	*stack_x = x_next;
+	return (1);
 }
 
-void rr(t_list **stack_a, t_list **stack_b)
+int rr(t_list **stack_a, t_list **stack_b, char *s)
 {
-	rx(stack_a);
-	rx(stack_b);
+	write(1, s, 3);
+	rx(stack_a, s);
+	rx(stack_b, s);
+	return (1);
 }
 
-void rrx(t_list **stack_x)
+int rrx(t_list **stack_x, char *s)
 {
 	t_list *last;
 
+	write(1, s, 4);
 	last = ft_lstlast(*stack_x);
 	set_last_null(stack_x);
 	last->next = *stack_x;
 	*stack_x = last;
+	return (1);
 }
 
-void	sx(t_list **stack)
+int	sx(t_list **stack, char *s)
 {
 	t_list *tmp;
-
-	tmp = (*stack_a)->next;
-	(*stack_a)->next = tmp->next;
-	tmp->next =  *stack_a;
-	*stack_a = tmp;
+	
+	write(1, s, 3);
+	tmp = (*stack)->next;
+	(*stack)->next = tmp->next;
+	tmp->next =  *stack;
+	*stack = tmp;
+	return (1);
 }
