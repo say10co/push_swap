@@ -69,14 +69,24 @@ def rrr():
 
 def print_staks(len_stack):
     i = 0
+    max_ = max(stack_a);
+    max_ = len(str(bin(max_)))
     while (i < len_stack):
         spc1 = "_"
         spc2 = "_"
+        one = "_"
+        tow = "_"
         if (check_stack(stack_a, i)): 
             spc1 = stack_a[i]
         if (check_stack(stack_b, i)):   
-            spc2 = stack_b[i]  
-        print (spc1, " ", spc2)
+            spc2 = stack_b[i]
+        if (spc2 != "_"):
+            tow = bin(spc2)
+            tow = "0" * (max_-2 - (len(tow) -2)) + tow[2:]
+        if (spc1 != "_"):
+            one = str(bin(spc1))
+            one = "0" * (max_-2 - (len(one) -2)) + one[2:]
+        print (spc1, " ", spc2, "-->", one," ", tow)
         i += 1
     print("_   _")
     print("a   b")

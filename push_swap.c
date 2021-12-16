@@ -108,6 +108,7 @@ int	main(int ac, char **args)
 	if (ac > 2)
 	{
 		o = 0;
+		stack_b = NULL;
 		sorted = sort_(++args, --ac, &array);
 		stack_a = form_stack(array, sorted, ac);	
 		max_l = max_instack(stack_a);
